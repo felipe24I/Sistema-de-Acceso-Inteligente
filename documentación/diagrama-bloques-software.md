@@ -1,4 +1,5 @@
 # Diagrama de Bloques Software
+![image](https://github.com/user-attachments/assets/70f8e3a3-17e7-4dcc-bfaf-1e3da4000e86)
 
 ## Descripción
 Detalla el flujo de ejecución del software y sus módulos principales, incluyendo el control del servomotor:
