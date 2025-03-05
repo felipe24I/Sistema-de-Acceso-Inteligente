@@ -78,6 +78,12 @@ uint32_t debounce_tick = 0;*/
 uint8_t  buffer_memory[5];
 ring_buffer_t rb;
 
+uint8_t pc_memory [5];
+ring_buffer_t pc;
+
+uint8_t telnet_memory [5];
+ring_buffer_t telnet;
+
 //Función para Mover el Servo Motor
 void move_servo(uint16_t position)
 {
@@ -89,12 +95,24 @@ void move_servo(uint16_t position)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if ((debounce_tick + 200) > HAL_GetTick()) {
-    return;
-  }
-  debounce_tick = HAL_GetTick();
-  key_pressed_tick = HAL_GetTick();
-  column_pressed = GPIO_Pin;
+    // Verificar si el pin es uno que nos interesa
+    if (GPIO_Pin != COLUMN_1_Pin && 
+        GPIO_Pin != COLUMN_2_Pin && 
+        GPIO_Pin != COLUMN_3_Pin && 
+        GPIO_Pin != COLUMN_4_Pin &&
+        GPIO_Pin != B1_Pin) {
+        return; // Ignorar interrupciones de otros pines
+    }
+    
+    // Filtrado de debounce
+    if ((debounce_tick + 200) > HAL_GetTick()) {
+        return;
+    }
+    
+    // Actualizar variables de control
+    debounce_tick = HAL_GetTick();
+    key_pressed_tick = HAL_GetTick();
+    column_pressed = GPIO_Pin;
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
@@ -119,6 +137,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   }
   
 }
+
+
+
 
 /* USER CODE END 0 */
 
@@ -166,6 +187,7 @@ int main(void)
   /* USER CODE END 2 */
   // Habilitar el PWM para el servo motor
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  
   move_servo(2000); // Posición de puerta cerrada (180 grados)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
