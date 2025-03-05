@@ -1,5 +1,5 @@
 # Diagrama de Contenedor
-![DIAGRAMAD DE CONTENEDOR](https://github.com/user-attachments/assets/432914a9-824f-4cb5-99fa-61be718fd9e6)
+![image](https://github.com/user-attachments/assets/9610fd83-8ddb-4d7f-9456-83ac6130d5cf)
 
 ## Descripción
 Detalla los componentes físicos del sistema y sus interconexiones:
